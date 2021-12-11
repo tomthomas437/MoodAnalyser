@@ -18,19 +18,28 @@ public class MoodAnalyserTest {
         String actualResult = moodAnalyser.analyseMood();
         Assert.assertEquals("HAPPY", actualResult);
     }
-    
 
     @Test
-    public void NullReturnHappy() throws MoodAnalyserException {
-        moodAnalyser.setMessage(null);
+    public void Null_MoodAnalysisException() {
         try {
-            String actualResult = moodAnalyser.analyseMood();
-            Assert.assertEquals("Entered Invalid Mood", actualResult);
+            MoodAnalyser moodAnalyser = new MoodAnalyser(null);
+            moodAnalyser.analyseMood();
         } catch (MoodAnalyserException e) {
-        	System.out.println("Invalid Mood");
-           e.printStackTrace();
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.ENTERED_NULL, e.exceptionType);
+        System.out.println("Entered null");
+        e.printStackTrace();
         }
-        System.out.println("The progarm is ended");
     }
-    
+
+    @Test
+    public void Empty_MoodAnalysisException() {
+        try {
+            MoodAnalyser moodAnalyser = new MoodAnalyser("");
+            moodAnalyser.analyseMood();
+        } catch (MoodAnalyserException e) {
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.ENTERED_EMPTY, e.exceptionType);
+            System.out.println("The string is empty");
+            e.printStackTrace();
+        }
+    }
 }
